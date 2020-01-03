@@ -1,0 +1,76 @@
+spring:
+  application:
+    name: normalization
+  # ===============================
+  # = JPA / HIBERNATE
+  # ===============================
+  # Use spring.jpa.properties.* for Hibernate native properties
+  # (the prefix is stripped before adding them to the entity manager).
+  # Show or not log for each sql query
+  jpa:
+    hibernate:
+      show-sql: true
+      # Hibernate ddl auto (validate, create, create-drop, update):
+      # with "update" the database schema will be automatically updated
+      # accordingly to java entities found in the project
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+
+## PORT
+server:
+  port: 8080
+
+---
+
+spring:
+  profiles: local
+  # ===============================
+  # = DATA SOURCE
+  # ===============================
+  # Set here configurations for the database connection
+  # Connection url for the database
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/mutante
+    # Username and password
+    username: postgres
+    password: admin
+    # Keep the connection alive if idle for a long time (needed in production)
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+---
+
+spring:
+  profiles: dev
+  # ===============================
+  # = DATA SOURCE
+  # ===============================
+  # Set here configurations for the database connection
+  # Connection url for the database
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/mutante
+    # Username and password
+    username: postgres
+    password: admin
+    # Keep the connection alive if idle for a long time (needed in production)
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+
+---
+
+spring:
+  profiles: prod
+  # ===============================
+  # = DATA SOURCE
+  # ===============================
+  # Set here configurations for the database connection
+  # Connection url for the database
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/mutante
+    # Username and password
+    username: postgres
+    password: admin
+    # Keep the connection alive if idle for a long time (needed in production)
+    testWhileIdle: true
+    validationQuery: SELECT 1
