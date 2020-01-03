@@ -1,32 +1,38 @@
 package com.mercadolibre.mutante.domain;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
+import java.util.Date;
 
-@Document(collection = "result")
+@Entity
 public class Result {
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-	private Sequence sequence;
+	private Date createdDate;
 
 	private boolean mutant;
 
-	public String getId() {
+	public Result(boolean mutant) {
+		this.createdDate = new Date();
+		this.mutant = mutant;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Sequence getSequence() {
-		return sequence;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setSequence(Sequence sequence) {
-		this.sequence = sequence;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public boolean isMutant() {

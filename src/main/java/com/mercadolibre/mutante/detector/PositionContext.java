@@ -10,15 +10,22 @@ public class PositionContext {
     private int safeIndex;
     private int size;
 
-    public PositionContext(int row, int column) {
+    public PositionContext(int row, int column, MutantContext context) {
+        this.subIndex = 0;
         this.row = row;
         this.column = column;
+        this.safeIndex = context.getDnaLength() - 1;
+        this.size = context.getDnaLength();
+        this.lastChar = context.getDnaChar(row,column);
     }
 
-    public PositionContext(int row, int column, int subIndex) {
+    public PositionContext(int row, int column, int subIndex, MutantContext context) {
         this.subIndex = subIndex;
         this.row = row;
         this.column = column;
+        this.safeIndex = context.getDnaLength() - 1;
+        this.size = context.getDnaLength();
+        this.lastChar = context.getDnaChar(row,column);
     }
 
     public PositionContext(int subIndex, int row, int column, char lastChar, char currentChar, int safeIndex, int size) {

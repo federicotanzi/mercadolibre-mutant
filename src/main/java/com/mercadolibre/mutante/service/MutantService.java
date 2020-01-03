@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
@@ -25,29 +26,32 @@ public class MutantService {
 
     private static final int SEQUENCES_MATCH_MUTANT = 2;
 
-    public boolean isMutantDNA(Sequence sequence) {
-        char[][] dna = loadStructure(sequence);
-        MutantContext mutantContext = new MutantContext(dna, SEQUENCE_SIZE_MUTANT, SEQUENCES_MATCH_MUTANT);
-        boolean mutant = isMutant(mutantContext);
-        Result result = new Result();
-        result.setSequence(sequence);
-        result.setMutant(mutant);
-        this.resultRepository.save(result);
-        return mutant;
-    }
-
-    private char[][] loadStructure(Sequence sequence) {
+    public Result isMutantDNA(Sequence sequence) {
+        boolean mutant;
         int vectorLength = sequence.getDna().size();
         if (vectorLength <= SEQUENCE_SIZE_MUTANT) {
-            log.debug("Minimum length must be greater than {} to belong to mutant.", SEQUENCE_SIZE_MUTANT);
+            log.info("Minimum length must be greater than {} to belong to mutant.", SEQUENCE_SIZE_MUTANT);
+            mutant = false;
+        } else {
+            char[][] dna = loadStructure(vectorLength, sequence.getDna());
+            MutantContext mutantContext = new MutantContext(dna, SEQUENCE_SIZE_MUTANT, SEQUENCES_MATCH_MUTANT);
+            mutant = isMutant(mutantContext);
         }
+        Result result = new Result(mutant);
+        this.resultRepository.save(result);
+        return result;
+    }
+
+    private char[][] loadStructure(int vectorLength, List<String> sequenceDna) {
         char[][] dna = new char[vectorLength][vectorLength];
         for (int i = 0; i < vectorLength; i++) {
-            String dnaRow = sequence.getDna().get(i);
+            String dnaRow = sequenceDna.get(i);
             if (dnaRow.length() != vectorLength) {
                 log.error("The length of the DNA sequences must be the same size");
+                throw new RuntimeException("The length of the DNA sequences must be the same size");
             } else if (!NITROGENOUS_PATTERN.matcher(dnaRow).matches()) {
                 log.error("The only valid characters are A, T, C and G");
+                throw new RuntimeException("The only valid characters are A, T, C and G");
             }
             dna[i] = dnaRow.toUpperCase().toCharArray();
         }

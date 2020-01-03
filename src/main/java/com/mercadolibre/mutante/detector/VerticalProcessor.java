@@ -9,7 +9,7 @@ public class VerticalProcessor extends MutantProcessor {
     @Override
     public void searchSequences() {
         for (int column = 0; column < context.getDnaLength(); column++) {
-            boolean match = findMutantSequence(new PositionContext(0, column));
+            boolean match = findMutantSequence(new PositionContext(0, column, context));
             if (match) {
                 break;
             }

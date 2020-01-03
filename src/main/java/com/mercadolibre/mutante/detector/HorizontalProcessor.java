@@ -9,7 +9,7 @@ public class HorizontalProcessor extends MutantProcessor {
     @Override
     public void searchSequences() {
         for (int row = 0; row < context.getDnaLength(); row++) {
-            boolean match = findMutantSequence(new PositionContext(row, 0));
+            boolean match = findMutantSequence(new PositionContext(row, 0 , context));
             if (match) {
                 break;
             }

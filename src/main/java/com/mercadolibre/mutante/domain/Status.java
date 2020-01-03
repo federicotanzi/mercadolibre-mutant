@@ -3,7 +3,9 @@ package com.mercadolibre.mutante.domain;
 public class Status {
 
     private long mutantCount = 0L;
+
     private long humanCount = 0L;
+
     private double ratio = 0D;
 
     public long getMutantCount() {

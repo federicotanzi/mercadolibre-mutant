@@ -8,12 +8,12 @@ public class DiagonalDownProcessor extends MutantProcessor {
 
     @Override
     public void searchSequences() {
-        boolean match = findMutantSequence(new PositionContext(0, 0));
+        boolean match = findMutantSequence(new PositionContext(0, 0, context));
         if (match) {
             return;
         }
         for (int row = 1; row <= context.getDnaLength() - context.getSequenceSizeMutant(); row++) {
-            match = findMutantSequence(new PositionContext(row, 0, row)) || findMutantSequence(new PositionContext(0, row, row));
+            match = findMutantSequence(new PositionContext(row, 0, row, context)) || findMutantSequence(new PositionContext(0, row, row, context));
             if (match) {
                 break;
             }

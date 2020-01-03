@@ -10,12 +10,12 @@ public class DiagonalUpProcessor extends MutantProcessor {
     public void searchSequences() {
         int fistIndexRow = context.getDnaLength() - 1;
         int fistIndexColumn = 0;
-        boolean match = findMutantSequence(new PositionContext(fistIndexRow, fistIndexColumn));
+        boolean match = findMutantSequence(new PositionContext(fistIndexRow, fistIndexColumn, context));
         if (match) {
             return;
         }
         for (int row = 1; row <= context.getDnaLength() - context.getSequenceSizeMutant(); row++) {
-            match = findMutantSequence(new PositionContext(fistIndexRow - row, 0, row))  || findMutantSequence(new PositionContext(fistIndexRow, row, row));
+            match = findMutantSequence(new PositionContext(fistIndexRow - row, 0, row, context))  || findMutantSequence(new PositionContext(fistIndexRow, row, row, context));
             if (match) {
                 break;
             }

@@ -1,5 +1,6 @@
 package com.mercadolibre.mutante.controller;
 
+import com.mercadolibre.mutante.domain.Result;
 import com.mercadolibre.mutante.domain.Sequence;
 import com.mercadolibre.mutante.service.MutantService;
 import org.slf4j.Logger;
@@ -27,8 +28,8 @@ public class MutantController {
     public ResponseEntity<Void> isMutant(@RequestBody @Valid Sequence sequence) {
         log.debug("Sequence: {}", sequence);
 
-        boolean isMutant = mutantService.isMutantDNA(sequence);
-        if (isMutant) {
+        Result result = mutantService.isMutantDNA(sequence);
+        if (result.isMutant()) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
