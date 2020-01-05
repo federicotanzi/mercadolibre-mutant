@@ -1,19 +1,54 @@
 # Mutante
 
-## Required Setup
+## Setup
 * Java 1.8 
 * Postgres Sql
 
-## Use
+## Uso
 
-Service:
-```
-$ ./mvnw
-  or
-$ mvnw (windows)
-```
+## Descripción del servidor REST
 
+El proyecto contiene un servidor web REST basado en Spring Boot. 
 
+Los mensajes que procesa son dos: 
+
+- POST /mutant/ , que recibe un json como el siguiente
+
+   ````
+   {
+       "dna": [
+           "ATGCGA",
+           "CAGTGC",
+           "TTATGT",
+           "AGAAGG",
+           "CCCCTA",
+           "TCACTG"
+       ]
+   }
+   ````
+
+- GET /stats/ , que devuelve un json de la forma: 
+
+  ````
+  {
+      "mutantCount": 0, 
+      "humanCount": 0,
+      "ratio": 0.0
+  }
+  ````
+
+## Deploy
+
+Alojada en AWS. 
+
+La URL es http://mutantmercadolibre-env.wgqmbp7eus.us-east-2.elasticbeanstalk.com/
+
+Configuración del servidor en la nube: 
+
+- Elastic Beanstalk
+  - **t3.micro** 
+- Base de datos: 
+  - PostgresSql en db.t2.micro (Amazon RDS)
 
 ## Examen Mercadolibre
 Magneto quiere reclutar la mayor cantidad de mutantes para poder luchar

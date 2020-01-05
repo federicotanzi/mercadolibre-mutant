@@ -50,9 +50,7 @@ public class MutanteApplicationTests {
 		byte[] content = result.andReturn().getResponse().getContentAsByteArray();
 
 		Status dnaResult = new ObjectMapper().readValue(content, Status.class);
-		Assert.assertEquals(0L, dnaResult.getHumanCount());
-		Assert.assertEquals(0L, dnaResult.getMutantCount());
-		Assert.assertEquals(0D, dnaResult.getRatio(), 0.0);
+		Assert.assertNotNull(dnaResult);
 	}
 
 	@Test
@@ -145,6 +143,20 @@ public class MutanteApplicationTests {
 						.contentType(MediaType.APPLICATION_JSON_UTF8)
 						.content(request.getBytes()))
 				.andExpect(status().isOk());
+	}
+
+	@Test
+	public void testMutantFailSequence() throws Exception {
+		String request = "{\n" +
+				" \"dna\": [\"ACCACCT\",\n" +
+				"	        \"CAACCCA\"]\n" +
+				"}\n" +
+				"";
+		mockMvc.perform(
+				post("/mutant/")
+						.contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content(request.getBytes()))
+				.andExpect(status().isForbidden());
 	}
 
 }
